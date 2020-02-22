@@ -12,4 +12,3 @@ class SunriseSunset(MycroftSkill):
 
 def create_skill():
     return SunriseSunset()
-

@@ -8,15 +8,15 @@ skillMetadata:
           label: Setting Friendly Display Name
           value: ""
           placeholder: demo prompt in the input box
-    - name: Login << Name of another section
+    - name: GPS Coordinates
       fields:
         - type: label
-          label: Just a little bit of extra info for the user to understand following settings
-        - name: username
+          label: Provide your GPS coordinates to allow Mycroft to calculate sunrise/sunset times for your location.
+        - name: longitude
           type: text
-          label: Username
+          label: Longitude
           value: ""
-        - name: password
-          type: password
-          label: Password
+        - name: latitude
+          type: text
+          label: Latitude
           value: ""
