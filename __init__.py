@@ -37,10 +37,13 @@ class SunriseSunset(MycroftSkill):
 
     @intent_file_handler('sunset.sunrise.intent')
     def handle_sunset_sunrise(self, message):
-        sunrise,sunset = self.calcsunriseandsunset(self.date)
-        self.speak_dialog('sunset.sunrise')
-        self.speak(str(sunrise))
-        self.speak(str(sunset))
+        if self.longitude is not None and self.latitude is not None:
+            sunrise,sunset = self.calcsunriseandsunset(self.date)
+            self.speak_dialog('sunset.sunrise')
+            self.speak(str(sunrise))
+            self.speak(str(sunset))
+        else:
+            self.speak("Sorry I don't know where I am. Can you please configure your G.P.S. coordinates in the skill settings?")
 
     def calcsunriseandsunset(self, dt):
         a=math.floor((14-dt.month)/12)
