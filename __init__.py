@@ -29,8 +29,8 @@ class SunriseSunset(MycroftSkill):
         self.latitude = None
 
     def initialize(self):
-        self.longitude = self.settings.get('longitude')
-        self.latitude = self.settings.get('latitude')
+        self.longitude = float(self.settings.get('longitude'))
+        self.latitude = float(self.settings.get('latitude'))
 
     def stop(self):
         pass
