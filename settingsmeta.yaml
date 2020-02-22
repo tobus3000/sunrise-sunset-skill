@@ -11,7 +11,7 @@ skillMetadata:
     - name: GPS Coordinates
       fields:
         - type: label
-          label: Provide your GPS coordinates to allow Mycroft to calculate sunrise/sunset times for your location.
+          label: Provide your GPS coordinates to allow Mycroft to calculate sunrise/sunset times for your location. Your coordinates will stay safe with Mycroft. No remote service will be called using your data.
         - name: longitude
           type: text
           label: Longitude
