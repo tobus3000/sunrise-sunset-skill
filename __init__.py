@@ -71,29 +71,32 @@ class SunriseSunset(MycroftSkill):
             self.speak(str(daytime))
 
         """ Start calculation of rise/set events """
-        sunrise,sunset = self.calc_sunrise_and_sunset(self.date)
+        sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
 
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
-            self.speak(str(self.time_has_passed(sunrise)))
+            time_passed = self.time_has_passed(sunrise_time)
+            self.speak(str(time_passed))
             self.speak("The sun will rise at ")
-            self.speak(str(sunrise))
+            self.speak(str(sunrise_time))
         elif event == "sunset":
-            self.speak(str(self.time_has_passed(sunset)))
+            self.speak(str(self.time_has_passed(sunset_time)))
             self.speak("The sun will set at ")
-            self.speak(str(sunset))
+            self.speak(str(sunset_time))
         else:
             self.speak("Sunrise at ")
-            self.speak(str(sunrise))
+            self.speak(str(sunrise_time))
             self.speak("Sunset at ")
-            self.speak(str(sunset))
+            self.speak(str(sunset_time))
 
     def time_has_passed(self, dt):
         dt_now = datetime.now().time()
         ms_now = time_to_miliseconds(dt_now)
         dt_event = dt
         ms_event = time_to_miliseconds(dt_event)
-        return ms_now - ms_event
+        time_delta = ms_now - ms_event
+        self.log.info("Time delta: " + str(time_delta))
+        return time_delta
 
     def calc_sunrise_and_sunset(self, dt):
         a=math.floor((14-dt.month)/12)
