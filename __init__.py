@@ -20,6 +20,9 @@ def calculate_time_from_julian_date(jd):
     hour=int(mins/60)
     return time(hour, mins % 60, secs % 60)
 
+def calculate_date_from_julian_date(jd):
+    dt = datetime.datetime.strptime(jd, '%y%j').strftime('%Y%m%d')
+    return dt
 
 class SunriseSunset(MycroftSkill):
     def __init__(self):
@@ -109,8 +112,8 @@ class SunriseSunset(MycroftSkill):
         jstarstar=2451545.0+0.0009+((H+self.longitude)/360)+n
         jset=jstarstar+(0.0053*sin_to_rad(M))-(0.0069*sin_to_rad(2*l))
         jrise=jtransit-(jset-jtransit)
-        return (jrise, jset)
-        #return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
+        return (calculate_date_from_julian_date(jrise), calculate_date_from_julian_date(jset))
+        # return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
 
 
 def create_skill():
