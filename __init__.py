@@ -43,15 +43,19 @@ class SunriseSunset(MycroftSkill):
         daytime = message.data.get('daytime')
 
         if orb is not None:
+            self.speak("orb is ")
             self.speak(str(orb))
 
         if when is not None:
+            self.speak("when is ")
             self.speak(str(when))
 
         if event is not None:
+            self.speak("event is ")
             self.speak(str(event))
 
         if daytime is not None:
+            self.speak("daytime is ")
             self.speak(str(daytime))
 
         if self.longitude is None or self.latitude is None:
