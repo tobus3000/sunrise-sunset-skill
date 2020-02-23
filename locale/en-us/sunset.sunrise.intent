@@ -1,2 +1,2 @@
-(What time|When) does the {orb} {action} (in the {daytime}|{date}| )?
-{event} ({date}|time|).
+(What time|When) does the {{orb}} {{action}} (in the {{daytime}}|{{date}}| )?
+{{event}} ({{date}}|time|).
