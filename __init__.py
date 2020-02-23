@@ -2,28 +2,17 @@ from mycroft import MycroftSkill, intent_file_handler
 from datetime import date, timedelta, datetime, time, tzinfo
 import math
 
-# Sources:
-# Carlos Platoni - http://thorpesoftware.com/calculating-sunrise-and-sunset/
-# Wikipedia - https://en.wikipedia.org/wiki/Sunrise_equation
-# http://users.electromagnetic.net/bu/astro/sunrise-set.php
-# http://aa.quae.nl/en/reken/zonpositie.html
-def sin_to_rad(deg):
-    return math.sin(deg * math.pi/180)
+"""
+Sunrise/Sunset Mycroft Skill
 
-def cos_to_rad(deg):
-    return math.cos(deg * math.pi/180)
+Source for the sunrise/sunset calculation python code is:
+- Carlos Platoni - http://thorpesoftware.com/calculating-sunrise-and-sunset/
 
-def calculate_time_from_julian_date(jd):
-    jd=jd+.5
-    secs=int((jd-int(jd))*24*60*60+.5)
-    mins=int(secs/60)
-    hour=int(mins/60)
-    return time(hour, mins % 60, secs % 60)
-
-""" Expects a datetime.time object and returns timedelta object """
-def time_to_miliseconds(tm):
-    return timedelta(hours=tm.hour, minutes=tm.minute, seconds=tm.second, microseconds=tm.microsecond)
-
+General sunrise/sunset related articles:
+- Wikipedia - https://en.wikipedia.org/wiki/Sunrise_equation
+- http://users.electromagnetic.net/bu/astro/sunrise-set.php
+- http://aa.quae.nl/en/reken/zonpositie.html
+"""
 
 class SunriseSunset(MycroftSkill):
     def __init__(self):
@@ -94,11 +83,10 @@ class SunriseSunset(MycroftSkill):
             self.speak("Sunset at ")
             self.speak(str(sunset_time))
 
-    def is_time_in_future(self, dt):
+    def is_time_in_future(self, dt_event):
         dt_now = datetime.now().time()
-        ms_now = time_to_miliseconds(dt_now)
-        dt_event = dt
-        ms_event = time_to_miliseconds(dt_event)
+        ms_now = self.time_to_miliseconds(dt_now)
+        ms_event = self.time_to_miliseconds(dt_event)
         time_delta = ms_event - ms_now
         self.log.info("Time delta: " + str(time_delta))
         if int(time_delta.total_seconds()) < 0:
@@ -115,18 +103,34 @@ class SunriseSunset(MycroftSkill):
         n=round(nstar)
         jstar = 2451545.0+0.0009+(self.longitude/360) + n
         M=(357.5291+0.98560028*(jstar-2451545)) % 360
-        c=(1.9148*sin_to_rad(M))+(0.0200*sin_to_rad(2*M))+(0.0003*sin_to_rad(3*M))
+        c=(1.9148*self.sin_to_rad(M))+(0.0200*self.sin_to_rad(2*M))+(0.0003*self.sin_to_rad(3*M))
         l=(M+102.9372+c+180) % 360
-        jtransit = jstar + (0.0053 * sin_to_rad(M)) - (0.0069 * sin_to_rad(2 * l))
-        delta=math.asin(sin_to_rad(l) * sin_to_rad(23.45))*180/math.pi
-        H = math.acos((sin_to_rad(-0.83)-sin_to_rad(self.latitude)*sin_to_rad(delta))/(cos_to_rad(self.latitude)*cos_to_rad(delta)))*180/math.pi
+        jtransit = jstar + (0.0053 * self.sin_to_rad(M)) - (0.0069 * self.sin_to_rad(2 * l))
+        delta=math.asin(self.sin_to_rad(l) * self.sin_to_rad(23.45))*180/math.pi
+        H = math.acos((self.sin_to_rad(-0.83)-self.sin_to_rad(self.latitude)*self.sin_to_rad(delta))/(self.cos_to_rad(self.latitude)*self.cos_to_rad(delta)))*180/math.pi
         jstarstar=2451545.0+0.0009+((H+self.longitude)/360)+n
-        jset=jstarstar+(0.0053*sin_to_rad(M))-(0.0069*sin_to_rad(2*l))
+        jset=jstarstar+(0.0053*self.sin_to_rad(M))-(0.0069*self.sin_to_rad(2*l))
         jrise=jtransit-(jset-jtransit)
-        self.log.info("Julian Sunrise: " + str(jrise))
-        self.log.info("Julian Sunset : " + str(jset))
-        return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
+        self.log.debug("Julian Sunrise: " + str(jrise))
+        self.log.debug("Julian Sunset : " + str(jset))
+        return (self.calculate_time_from_julian_date(jrise), self.calculate_time_from_julian_date(jset))
 
+    def sin_to_rad(self, deg):
+        return math.sin(deg * math.pi/180)
+
+    def cos_to_rad(self, deg):
+        return math.cos(deg * math.pi/180)
+
+    def calculate_time_from_julian_date(self, jd):
+        jd=jd+.5
+        secs=int((jd-int(jd))*24*60*60+.5)
+        mins=int(secs/60)
+        hour=int(mins/60)
+        return time(hour, mins % 60, secs % 60)
+
+    """ Expects a datetime.time object and returns timedelta object """
+    def time_to_miliseconds(self, tm):
+        return timedelta(hours=tm.hour, minutes=tm.minute, seconds=tm.second, microseconds=tm.microsecond)
 
 def create_skill():
     return SunriseSunset()
