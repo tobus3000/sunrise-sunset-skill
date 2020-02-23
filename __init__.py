@@ -54,6 +54,8 @@ class SunriseSunset(MycroftSkill):
             if when == "tomorrow":
                 self.date = datetime.now() + timedelta(days=1)
             self.log.info("When is: " + str(when))
+        else:
+            when = ""
 
         """ Event can be sunrise, sunset, etc..."""
         if event is not None:
