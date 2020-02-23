@@ -7,13 +7,13 @@ import math
 # Wikipedia - https://en.wikipedia.org/wiki/Sunrise_equation
 # http://users.electromagnetic.net/bu/astro/sunrise-set.php
 # http://aa.quae.nl/en/reken/zonpositie.html
-def sinrad(deg):
+def sin_to_rad(deg):
     return math.sin(deg * math.pi/180)
 
-def cosrad(deg):
+def cos_to_rad(deg):
     return math.cos(deg * math.pi/180)
 
-def calculatetimefromjuliandate(jd):
+def calculate_time_from_julian_date(jd):
     jd=jd+.5
     secs=int((jd-int(jd))*24*60*60+.5)
     mins=int(secs/60)
@@ -69,12 +69,15 @@ class SunriseSunset(MycroftSkill):
             self.speak(str(daytime))
 
         """ Start calculation of rise/set events """
-        sunrise,sunset = self.calcsunriseandsunset(self.date)
+        sunrise,sunset = self.calc_sunrise_and_sunset(self.date)
+
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
+            self.speak(str(time_has_passed(sunrise)))
             self.speak("The sun will rise at ")
             self.speak(str(sunrise))
         elif event == "sunset":
+            self.speak(str(time_has_passed(sunset)))
             self.speak("The sun will set at ")
             self.speak(str(sunset))
         else:
@@ -83,8 +86,12 @@ class SunriseSunset(MycroftSkill):
             self.speak("Sunset at ")
             self.speak(str(sunset))
 
+    def time_has_passed(self, dt):
+        dt_when = self.date
+        dt_event = dt
+        return dt_when - dt_event
 
-    def calcsunriseandsunset(self, dt):
+    def calc_sunrise_and_sunset(self, dt):
         a=math.floor((14-dt.month)/12)
         y = dt.year+4800-a
         m = dt.month+12*a -3
@@ -94,15 +101,15 @@ class SunriseSunset(MycroftSkill):
         n=round(nstar)
         jstar = 2451545.0+0.0009+(self.longitude/360) + n
         M=(357.5291+0.98560028*(jstar-2451545)) % 360
-        c=(1.9148*sinrad(M))+(0.0200*sinrad(2*M))+(0.0003*sinrad(3*M))
+        c=(1.9148*sin_to_rad(M))+(0.0200*sin_to_rad(2*M))+(0.0003*sin_to_rad(3*M))
         l=(M+102.9372+c+180) % 360
-        jtransit = jstar + (0.0053 * sinrad(M)) - (0.0069 * sinrad(2 * l))
-        delta=math.asin(sinrad(l) * sinrad(23.45))*180/math.pi
-        H = math.acos((sinrad(-0.83)-sinrad(self.latitude)*sinrad(delta))/(cosrad(self.latitude)*cosrad(delta)))*180/math.pi
+        jtransit = jstar + (0.0053 * sin_to_rad(M)) - (0.0069 * sin_to_rad(2 * l))
+        delta=math.asin(sin_to_rad(l) * sin_to_rad(23.45))*180/math.pi
+        H = math.acos((sin_to_rad(-0.83)-sin_to_rad(self.latitude)*sin_to_rad(delta))/(cos_to_rad(self.latitude)*cos_to_rad(delta)))*180/math.pi
         jstarstar=2451545.0+0.0009+((H+self.longitude)/360)+n
-        jset=jstarstar+(0.0053*sinrad(M))-(0.0069*sinrad(2*l))
+        jset=jstarstar+(0.0053*sin_to_rad(M))-(0.0069*sin_to_rad(2*l))
         jrise=jtransit-(jset-jtransit)
-        return (calculatetimefromjuliandate(jrise), calculatetimefromjuliandate(jset))
+        return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
 
 
 def create_skill():
