@@ -73,11 +73,11 @@ class SunriseSunset(MycroftSkill):
 
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
-            self.speak(str(time_has_passed(sunrise)))
+            self.speak(str(self.time_has_passed(sunrise)))
             self.speak("The sun will rise at ")
             self.speak(str(sunrise))
         elif event == "sunset":
-            self.speak(str(time_has_passed(sunset)))
+            self.speak(str(self.time_has_passed(sunset)))
             self.speak("The sun will set at ")
             self.speak(str(sunset))
         else:
