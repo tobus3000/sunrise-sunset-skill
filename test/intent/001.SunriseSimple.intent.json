@@ -1,0 +1,5 @@
+{
+    "utterance": "Sunrise",
+    "intent_type": "handle_sunset_sunrise",
+    "expected_dialog": "sunset.sunrise.dialog"
+  }
