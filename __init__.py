@@ -60,7 +60,7 @@ class SunriseSunset(MycroftSkill):
                 self.date = datetime.now() + timedelta(days=1)
                 self.speak("date tomorrow is " + str(self.date))
 
-            self.log.info("When is: " + str(when)))
+            self.log.info("When is: " + str(when))
 
         if event is not None:
             self.log.info("Event is: " + str(event))
