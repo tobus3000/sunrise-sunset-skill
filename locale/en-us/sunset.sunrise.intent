@@ -1,9 +1,3 @@
-When does the {orb} {set | rise | appear}
-Sunset today
-Sunrise today
-Sunset
-Sunrise
-What time does the {orb} {set | rise} {date}
-Sunset time
-Sunrise time
-When does the {orb} {appear | disappear} in the {evening | morning}
+When does the {orb} (appear|rise|disappear|go down) (in the (evening|morning)|{date}| )
+(Sunset|Sunrise) ({date}|time|)
+What time does the {orb} (set|rise) {date}

@@ -38,8 +38,12 @@ class SunriseSunset(MycroftSkill):
     @intent_file_handler('sunset.sunrise.intent')
     def handle_sunset_sunrise(self, message):
         orb = message.data.get('orb')
+        when = message.data.get('date')
         if orb is not None:
             self.speak(str(orb))
+
+        if when is not None:
+            self.speak(str(when))
 
         if self.longitude is None or self.latitude is None:
             self.speak("Sorry I don't know my exact position. Can you please configure your G.P.S. coordinates in the skill settings?")
