@@ -60,12 +60,10 @@ class SunriseSunset(MycroftSkill):
                 self.date = datetime.now() + timedelta(days=1)
                 self.speak("date tomorrow is " + str(self.date))
 
-            self.speak("when is ")
-            self.speak(str(when))
+            self.log.info("When is: " + str(when)))
 
         if event is not None:
-            self.speak("event is ")
-            self.speak(str(event))
+            self.log.info("Event is: " + str(event))
 
         if daytime is not None:
             self.speak("daytime is ")
@@ -112,6 +110,8 @@ class SunriseSunset(MycroftSkill):
         jstarstar=2451545.0+0.0009+((H+self.longitude)/360)+n
         jset=jstarstar+(0.0053*sin_to_rad(M))-(0.0069*sin_to_rad(2*l))
         jrise=jtransit-(jset-jtransit)
+        self.log.info("Julian Sunrise: " + str(jrise))
+        self.log.info("Julian Sunset : " + str(jset))
         return (calculate_date_from_julian_date(jrise), calculate_date_from_julian_date(jset))
         # return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
 
