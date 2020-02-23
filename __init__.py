@@ -61,7 +61,6 @@ class SunriseSunset(MycroftSkill):
 
         """ Start calculation of rise/set events """
         sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
-        self.speak_dialog('sunriseFuture')
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
             in_future = self.is_time_in_future(sunrise_time)
@@ -84,6 +83,9 @@ class SunriseSunset(MycroftSkill):
             self.speak(str(sunrise_time))
             self.speak("Sunset at ")
             self.speak(str(sunset_time))
+
+        self.speak_dialog('sunriseFuture')
+
 
     def is_time_in_future(self, dt_event):
         dt_now = datetime.now().time()
