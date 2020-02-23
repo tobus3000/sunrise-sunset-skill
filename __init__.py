@@ -84,7 +84,7 @@ class SunriseSunset(MycroftSkill):
             self.speak("Sunset at ")
             self.speak(str(sunset_time))
 
-        self.speak_dialog('sunriseFuture')
+        self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time)})
 
 
     def is_time_in_future(self, dt_event):
