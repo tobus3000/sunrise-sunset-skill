@@ -1,4 +1,4 @@
-The sun did set at {sunset}.
-The sunset was at {sunset}.
+The sun did set at {sunset} {when}.
+The sunset {when} was at {sunset}.
 The sun went down at {sunset}.
 Sunset was at {sunset}.

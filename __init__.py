@@ -69,15 +69,15 @@ class SunriseSunset(MycroftSkill):
         if event == "sunrise":
             in_future = self.is_time_in_future(sunrise_time)
             if in_future or when == "tomorrow":
-                self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time)})
+                self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time), "when": when})
             else:
-                self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time)})
+                self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time), "when": when})
         elif event == "sunset":
             in_future = self.is_time_in_future(sunset_time)
             if in_future or when == "tomorrow":
-                self.speak_dialog('sunsetFuture', data={"sunset": str(sunset_time)})
+                self.speak_dialog('sunsetFuture', data={"sunset": str(sunset_time), "when": when})
             else:
-                self.speak_dialog('sunsetPast', data={"sunset": str(sunset_time)})
+                self.speak_dialog('sunsetPast', data={"sunset": str(sunset_time), "when": when})
         else:
             self.speak("What?")
             #self.speak("Sunrise at ")

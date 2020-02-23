@@ -1,5 +1,5 @@
-The sun does rise at {sunrise} in the morning.
-The sunrise will be at {sunrise}.
-The sun will appear at {sunrise}.
-The sun is going to rise at {sunrise}.
-The sun will come up at {sunrise}.
+The sun does rise at {sunrise} {when}.
+The sunrise will be at {sunrise} {when}.
+The sun will appear at {sunrise} {when}.
+The sun is going to rise at {sunrise} {when}.
+The sun will come up at {sunrise} {when}.
