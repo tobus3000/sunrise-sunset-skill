@@ -20,9 +20,6 @@ def calculate_time_from_julian_date(jd):
     hour=int(mins/60)
     return time(hour, mins % 60, secs % 60)
 
-def calculate_date_from_julian_date(jd):
-    dt = datetime.strptime(str(jd), '%j').strftime('%d/%m/%y %H:%M:%S')
-    return dt
 
 class SunriseSunset(MycroftSkill):
     def __init__(self):
@@ -88,9 +85,9 @@ class SunriseSunset(MycroftSkill):
             self.speak(str(sunset))
 
     def time_has_passed(self, dt):
-        dt_when = self.date
+        dt_now = datetime.now().time()
         dt_event = dt
-        return dt_when - dt_event
+        return dt_now - dt_event
 
     def calc_sunrise_and_sunset(self, dt):
         a=math.floor((14-dt.month)/12)
@@ -112,8 +109,7 @@ class SunriseSunset(MycroftSkill):
         jrise=jtransit-(jset-jtransit)
         self.log.info("Julian Sunrise: " + str(jrise))
         self.log.info("Julian Sunset : " + str(jset))
-        return (calculate_date_from_julian_date(jrise), calculate_date_from_julian_date(jset))
-        # return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
+        return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
 
 
 def create_skill():
