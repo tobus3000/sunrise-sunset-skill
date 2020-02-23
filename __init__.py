@@ -75,13 +75,18 @@ class SunriseSunset(MycroftSkill):
 
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
-            time_passed = self.time_has_passed(sunrise_time)
-            self.speak(str(time_passed))
-            self.speak("The sun will rise at ")
+            in_future = self.is_time_in_future(sunrise_time)
+            if in_future:
+                self.speak("The sun will rise at ")
+            else:
+                self.speak("The sun did rise at ")
             self.speak(str(sunrise_time))
         elif event == "sunset":
-            self.speak(str(self.time_has_passed(sunset_time)))
-            self.speak("The sun will set at ")
+            in_future = self.is_time_in_future(sunset_time))
+            if in_future:
+                self.speak("The sun will set at ")
+            else:
+                self.speak("The sun did go down at ")
             self.speak(str(sunset_time))
         else:
             self.speak("Sunrise at ")
@@ -89,13 +94,15 @@ class SunriseSunset(MycroftSkill):
             self.speak("Sunset at ")
             self.speak(str(sunset_time))
 
-    def time_has_passed(self, dt):
+    def is_time_in_future(self, dt):
         dt_now = datetime.now().time()
         ms_now = time_to_miliseconds(dt_now)
         dt_event = dt
         ms_event = time_to_miliseconds(dt_event)
         time_delta = ms_event - ms_now
         self.log.info("Time delta: " + str(time_delta))
+        if time_delta.total_seconds < 0:
+            return False
         return time_delta
 
     def calc_sunrise_and_sunset(self, dt):
