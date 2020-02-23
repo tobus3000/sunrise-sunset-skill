@@ -37,6 +37,11 @@ class SunriseSunset(MycroftSkill):
 
     @intent_file_handler('sunset.sunrise.intent')
     def handle_sunset_sunrise(self, message):
+        """ Only bother calculating stuff when we know at what location we are. """
+        if self.longitude is None or self.latitude is None:
+            self.speak("Sorry I don't know my exact position. Can you please configure your G.P.S. coordinates in the skill settings?")
+            return
+
         orb = message.data.get('orb')
         when = message.data.get('date')
         event = message.data.get('event')
@@ -46,7 +51,12 @@ class SunriseSunset(MycroftSkill):
             self.speak("orb is ")
             self.speak(str(orb))
 
+        """ Change date if not today """
         if when is not None:
+            if when == "tomorrow":
+                self.date = datetime.now() + timedelta(days=1)
+                self.speak("date tomorrow is " + str(self.date))
+
             self.speak("when is ")
             self.speak(str(when))
 
@@ -58,23 +68,20 @@ class SunriseSunset(MycroftSkill):
             self.speak("daytime is ")
             self.speak(str(daytime))
 
-        if self.longitude is None or self.latitude is None:
-            self.speak("Sorry I don't know my exact position. Can you please configure your G.P.S. coordinates in the skill settings?")
-            return
+        """ Start calculation of rise/set events """
+        sunrise,sunset = self.calcsunriseandsunset(self.date)
+        #self.speak_dialog('sunset.sunrise')
+        if event == "sunrise":
+            self.speak("The sun will rise at ")
+            self.speak(str(sunrise))
+        elif event == "sunset":
+            self.speak("The sun will set at ")
+            self.speak(str(sunset))
         else:
-            sunrise,sunset = self.calcsunriseandsunset(self.date)
-            #self.speak_dialog('sunset.sunrise')
-            if event == "sunrise":
-                self.speak("The sun will rise at ")
-                self.speak(str(sunrise))
-            elif event == "sunset":
-                self.speak("The sun will set at ")
-                self.speak(str(sunset))
-            else:
-                self.speak("Sunrise at ")
-                self.speak(str(sunrise))
-                self.speak("Sunset at ")
-                self.speak(str(sunset))
+            self.speak("Sunrise at ")
+            self.speak(str(sunrise))
+            self.speak("Sunset at ")
+            self.speak(str(sunset))
 
 
     def calcsunriseandsunset(self, dt):
