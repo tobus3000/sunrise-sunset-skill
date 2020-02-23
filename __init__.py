@@ -24,6 +24,11 @@ class SunriseSunset(MycroftSkill):
     def initialize(self):
         self.longitude = float(self.settings.get('longitude'))
         self.latitude = float(self.settings.get('latitude'))
+        self.register_entity_file('daytime')
+        self.register_entity_file('orb')
+        self.register_entity_file('action')
+        self.register_entity_file('event')
+        self.register_entity_file('date')
 
     def stop(self):
         pass
