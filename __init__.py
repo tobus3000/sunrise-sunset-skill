@@ -39,11 +39,20 @@ class SunriseSunset(MycroftSkill):
     def handle_sunset_sunrise(self, message):
         orb = message.data.get('orb')
         when = message.data.get('date')
+        event = message.data.get('event')
+        daytime = message.data.get('daytime')
+
         if orb is not None:
             self.speak(str(orb))
 
         if when is not None:
             self.speak(str(when))
+
+        if event is not None:
+            self.speak(str(event))
+
+        if daytime is not None:
+            self.speak(str(daytime))
 
         if self.longitude is None or self.latitude is None:
             self.speak("Sorry I don't know my exact position. Can you please configure your G.P.S. coordinates in the skill settings?")
