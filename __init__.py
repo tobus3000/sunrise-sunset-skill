@@ -53,10 +53,9 @@ class SunriseSunset(MycroftSkill):
         if when is not None:
             if when == "tomorrow":
                 self.date = datetime.now() + timedelta(days=1)
-                self.speak("date tomorrow is " + str(self.date))
-
             self.log.info("When is: " + str(when))
 
+        """ Event can be sunrise, sunset, etc..."""
         if event is not None:
             self.log.info("Event is: " + str(event))
 
@@ -73,14 +72,12 @@ class SunriseSunset(MycroftSkill):
                 self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time)})
             else:
                 self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time)})
-#            self.speak(str(sunrise_time))
         elif event == "sunset":
             in_future = self.is_time_in_future(sunset_time)
             if in_future or when == "tomorrow":
-                self.speak("The sun will set at ")
+                self.speak_dialog('sunsetFuture', data={"sunset": str(sunset_time)})
             else:
-                self.speak("The sun did go down at ")
-            self.speak(str(sunset_time))
+                self.speak_dialog('sunsetPast', data={"sunset": str(sunset_time)})
         else:
             self.speak("What?")
             #self.speak("Sunrise at ")
