@@ -20,6 +20,9 @@ def calculate_time_from_julian_date(jd):
     hour=int(mins/60)
     return time(hour, mins % 60, secs % 60)
 
+def time_to_miliseconds(dt):
+    return dt.timedelta(hours=t1.hour, minutes=t1.minute, seconds=t1.second, microseconds=t1.microsecond)
+
 
 class SunriseSunset(MycroftSkill):
     def __init__(self):
@@ -86,8 +89,10 @@ class SunriseSunset(MycroftSkill):
 
     def time_has_passed(self, dt):
         dt_now = datetime.now().time()
+        ms_now = time_to_miliseconds(dt_now)
         dt_event = dt
-        return dt_now - dt_event
+        ms_event = time_to_miliseconds(dt_event)
+        return ms_now - ms_event
 
     def calc_sunrise_and_sunset(self, dt):
         a=math.floor((14-dt.month)/12)
