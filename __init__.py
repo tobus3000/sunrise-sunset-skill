@@ -21,7 +21,7 @@ def calculate_time_from_julian_date(jd):
     return time(hour, mins % 60, secs % 60)
 
 def calculate_date_from_julian_date(jd):
-    dt = datetime.strptime(str(jd), '%j').strftime('%Y%m%d')
+    dt = datetime.strptime(str(jd), '%j').strftime('%Y%m%d %h:%m:%s')
     return dt
 
 class SunriseSunset(MycroftSkill):
