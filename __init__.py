@@ -22,7 +22,7 @@ def calculate_time_from_julian_date(jd):
 
 """ Expects a datetime.time object and returns timedelta object """
 def time_to_miliseconds(tm):
-    return datetime.timedelta(hours=tm.hour, minutes=tm.minute, seconds=tm.second, microseconds=tm.microsecond)
+    return timedelta(hours=tm.hour, minutes=tm.minute, seconds=tm.second, microseconds=tm.microsecond)
 
 
 class SunriseSunset(MycroftSkill):
