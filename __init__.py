@@ -101,7 +101,7 @@ class SunriseSunset(MycroftSkill):
         ms_event = time_to_miliseconds(dt_event)
         time_delta = ms_event - ms_now
         self.log.info("Time delta: " + str(time_delta))
-        if time_delta.total_seconds < 0:
+        if int(time_delta.total_seconds()) < 0:
             return False
         return time_delta
 
