@@ -20,9 +20,9 @@ def calculate_time_from_julian_date(jd):
     hour=int(mins/60)
     return time(hour, mins % 60, secs % 60)
 
+""" Expects a datetime.time object and returns timedelta object """
 def time_to_miliseconds(tm):
-    t1 = datetime.time(tm)
-    return datetime.timedelta(hours=t1.hour, minutes=t1.minute, seconds=t1.second, microseconds=t1.microsecond)
+    return datetime.timedelta(hours=tm.hour, minutes=tm.minute, seconds=tm.second, microseconds=tm.microsecond)
 
 
 class SunriseSunset(MycroftSkill):
