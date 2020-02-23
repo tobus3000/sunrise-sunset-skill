@@ -94,7 +94,7 @@ class SunriseSunset(MycroftSkill):
         ms_now = time_to_miliseconds(dt_now)
         dt_event = dt
         ms_event = time_to_miliseconds(dt_event)
-        time_delta = ms_now - ms_event
+        time_delta = ms_event - ms_now
         self.log.info("Time delta: " + str(time_delta))
         return time_delta
 
