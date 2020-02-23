@@ -109,7 +109,8 @@ class SunriseSunset(MycroftSkill):
         jstarstar=2451545.0+0.0009+((H+self.longitude)/360)+n
         jset=jstarstar+(0.0053*sin_to_rad(M))-(0.0069*sin_to_rad(2*l))
         jrise=jtransit-(jset-jtransit)
-        return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
+        return (jrise, jset)
+        #return (calculate_time_from_julian_date(jrise), calculate_time_from_julian_date(jset))
 
 
 def create_skill():
