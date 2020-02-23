@@ -1,4 +1,4 @@
-The sun does rise at {sunrise_time} in the morning
-The sunset will be at {sunrise_time}
-The sun will appear at {sunrise_time}
-The sun is going to rise at {sunrise_time}
+The sun does rise at {sunrise} in the morning
+The sunset will be at {sunrise}
+The sun will appear at {sunrise}
+The sun is going to rise at {sunrise}
