@@ -76,7 +76,7 @@ class SunriseSunset(MycroftSkill):
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
             in_future = self.is_time_in_future(sunrise_time)
-            if in_future:
+            if in_future or event == "tomorrow":
                 self.speak("The sun will rise at ")
             else:
                 self.speak("The sun did rise at ")
