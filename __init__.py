@@ -1,5 +1,4 @@
 from mycroft import MycroftSkill, intent_file_handler
-import suncalc
 from datetime import date, timedelta, datetime, time, tzinfo
 import math
 
