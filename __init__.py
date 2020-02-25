@@ -36,6 +36,7 @@ class SunriseSunset(MycroftSkill):
     """ Reload coordinates if config has been updated """
     def handler_configuration_updated(self, message):
         self.load_configuration()
+        self.log.info("Configuration has been updated.")
         return
 
     def load_configuration(self):
@@ -56,8 +57,7 @@ class SunriseSunset(MycroftSkill):
         daytime = message.data.get('daytime')
 
         if orb is not None:
-            self.speak("orb is ")
-            self.speak(str(orb))
+            self.log.info("Orb is: " + str(orb))
 
         """ Change date if not today """
         if when is not None:
@@ -68,8 +68,12 @@ class SunriseSunset(MycroftSkill):
             when = ""
 
         """ Event can be sunrise, sunset, etc..."""
-        if event is not None:
+        if event is not None and orb is None:
             self.log.info("Event is: " + str(event))
+            if event in ['sunrise', 'sunset']:
+                self.orb = "sun"
+            elif event in ['moonrise', 'moonset']:
+                self.orb = "moon"
 
         if daytime is not None:
             self.speak("daytime is ")
