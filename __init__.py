@@ -1,7 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
 from datetime import date, timedelta, datetime, time, tzinfo
 import math
-from suncaclPy import suncalc
+import suncalcPy
 
 """
 Sunrise/Sunset Mycroft Skill
@@ -68,7 +68,7 @@ class SunriseSunset(MycroftSkill):
 
         """ Start calculation of rise/set events """
         sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
-        sun_times = suncalc.getTimes(self.date, self.longitude, self.latitude)
+        sun_times = suncalcPy.suncalc.getTimes(self.date, self.latitude, self.longitude)
         self.log.info(str(sun_times))
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
