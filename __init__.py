@@ -1,6 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
 from datetime import date, timedelta, datetime, time, tzinfo
-#import math
+import math
+import suncalcPy
 
 """
 Sunrise/Sunset Mycroft Skill
@@ -29,8 +30,6 @@ class SunriseSunset(MycroftSkill):
         self.register_entity_file('action.entity')
         self.register_entity_file('event.entity')
         self.register_entity_file('date.entity')
-        loc = self.location
-        self.log.info(str(loc))
 
     def stop(self):
         pass
