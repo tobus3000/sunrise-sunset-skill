@@ -29,6 +29,7 @@ class SunriseSunset(MycroftSkill):
         self.register_entity_file('action.entity')
         self.register_entity_file('event.entity')
         self.register_entity_file('date.entity')
+        self.log.info(str(self.location()))
 
     def stop(self):
         pass
