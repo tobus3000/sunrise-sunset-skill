@@ -1,7 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
 from datetime import date, timedelta, datetime, time, tzinfo
 import math
-import suncalc
+import suncalcPy as suncalc
 
 """
 Sunrise/Sunset Mycroft Skill
