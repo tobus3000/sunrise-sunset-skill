@@ -33,8 +33,8 @@ class SunriseSunset(MycroftSkill):
     def stop(self):
         pass
 
-    @intent_file_handler('sunset.sunrise.intent')
-    def handle_sunset_sunrise(self, message):
+    @intent_file_handler('set.rise.intent')
+    def handle_set_rise(self, message):
         """ Only bother calculating stuff when we know at what location we are. """
         if self.longitude is None or self.latitude is None:
             self.speak("Sorry I don't know my exact position. Can you please configure your G.P.S. coordinates in the skill settings?")
@@ -118,6 +118,9 @@ class SunriseSunset(MycroftSkill):
         self.log.debug("Julian Sunrise: " + str(jrise))
         self.log.debug("Julian Sunset : " + str(jset))
         return (self.calculate_time_from_julian_date(jrise), self.calculate_time_from_julian_date(jset))
+
+    def calc_moonrise_and_moonset(self, dt):
+        pass
 
     def sin_to_rad(self, deg):
         return math.sin(deg * math.pi/180)
