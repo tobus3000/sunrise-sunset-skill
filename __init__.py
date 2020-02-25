@@ -22,8 +22,8 @@ class SunriseSunset(MycroftSkill):
         self.latitude = None
 
     def initialize(self):
-        self.longitude = float(self.settings.get('longitude'))
-        self.latitude = float(self.settings.get('latitude'))
+        self.add_event('configuration.updated', self.handler_configuration_updated)
+        self.load_configuration()
         self.register_entity_file('daytime.entity')
         self.register_entity_file('orb.entity')
         self.register_entity_file('action.entity')
@@ -32,6 +32,16 @@ class SunriseSunset(MycroftSkill):
 
     def stop(self):
         pass
+
+    """ Reload coordinates if config has been updated """
+    def handler_configuration_updated(self, message):
+        self.load_configuration()
+        return
+
+    def load_configuration(self):
+        self.longitude = float(self.settings.get('longitude'))
+        self.latitude = float(self.settings.get('latitude'))
+        return
 
     @intent_file_handler('set.rise.intent')
     def handle_set_rise(self, message):
