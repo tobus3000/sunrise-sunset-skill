@@ -48,13 +48,13 @@ class SunriseSunset(MycroftSkill):
     def handler_set_rise(self, message):
         """ Only bother calculating stuff when we know at what location we are. """
         if self.longitude is None or self.latitude is None:
-            self.speak("Sorry I don't know my exact position. Can you please configure your G.P.S. coordinates in the skill settings?")
+            self.speak.dialog('location')
             return
 
+        """ Get the entities from the message. """
         orb = message.data.get('orb')
         when = message.data.get('date')
         event = message.data.get('event')
-        daytime = message.data.get('daytime')
 
         if orb is not None:
             self.log.info("Orb is: " + str(orb))
@@ -68,16 +68,13 @@ class SunriseSunset(MycroftSkill):
             when = ""
 
         """ Event can be sunrise, sunset, etc..."""
-        if event is not None and orb is None:
+        if event is not None:
             self.log.info("Event is: " + str(event))
-            if event in ['sunrise', 'sunset']:
-                self.orb = "sun"
-            elif event in ['moonrise', 'moonset']:
-                self.orb = "moon"
-
-        if daytime is not None:
-            self.speak("daytime is ")
-            self.speak(str(daytime))
+            if orb is None:
+                if event in ['sunrise', 'sunset']:
+                    self.orb = "sun"
+                elif event in ['moonrise', 'moonset']:
+                    self.orb = "moon"
 
         """ Start calculation of rise/set events """
         sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
