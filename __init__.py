@@ -68,7 +68,7 @@ class SunriseSunset(MycroftSkill):
 
         """ Start calculation of rise/set events """
         sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
-        sun_times = suncalc.getTimes(self.date, self.latitude, self.longitude)
+        sun_times = suncalc.suncalc.getTimes(self.date, self.latitude, self.longitude)
         self.log.info(str(sun_times))
         #self.speak_dialog('sunset.sunrise')
         if event == "sunrise":
