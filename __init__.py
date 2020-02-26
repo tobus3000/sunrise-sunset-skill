@@ -76,26 +76,25 @@ class SunriseSunset(MycroftSkill):
                     self.orb = "moon"
 
         """ Start calculation of rise/set events """
-        sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
-        if event == "sunrise":
-            in_future = self.is_time_in_future(sunrise_time)
-            if in_future or when == "tomorrow":
-                self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time), "when": when})
+        if orb == "sun":
+            sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
+            if event == "sunrise":
+                in_future = self.is_time_in_future(sunrise_time)
+                if in_future or when == "tomorrow":
+                    self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time), "when": when})
+                else:
+                    self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time), "when": when})
+            elif event == "sunset":
+                in_future = self.is_time_in_future(sunset_time)
+                if in_future or when == "tomorrow":
+                    self.speak_dialog('sunsetFuture', data={"sunset": str(sunset_time), "when": when})
+                else:
+                    self.speak_dialog('sunsetPast', data={"sunset": str(sunset_time), "when": when})
             else:
-                self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time), "when": when})
-        elif event == "sunset":
-            in_future = self.is_time_in_future(sunset_time)
-            if in_future or when == "tomorrow":
-                self.speak_dialog('sunsetFuture', data={"sunset": str(sunset_time), "when": when})
-            else:
-                self.speak_dialog('sunsetPast', data={"sunset": str(sunset_time), "when": when})
-        else:
-            self.speak("What?")
-            #self.speak("Sunrise at ")
-            #self.speak(str(sunrise_time))
-            #self.speak("Sunset at ")
-            #self.speak(str(sunset_time))
+                self.speak("What?")
 
+        elif orb == "moon":
+            self.speak("I still have to learn that, sorry.")
 
     def is_time_in_future(self, dt_event):
         dt_now = datetime.now().time()
