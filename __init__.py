@@ -54,7 +54,9 @@ class SunriseSunset(MycroftSkill):
         orb = message.data.get('orb')
         when = message.data.get('date')
         event = message.data.get('event')
+        action = message.data.get('action')
 
+        """ See if we got an orb object """
         if orb is not None:
             self.log.info("Orb is: " + str(orb))
 
@@ -66,7 +68,7 @@ class SunriseSunset(MycroftSkill):
         else:
             when = ""
 
-        """ Event can be sunrise, sunset, etc..."""
+        """ Event can be sunrise, sunset, etc... Try to guess event from action entities if not set. """
         if event is not None:
             self.log.info("Event is: " + str(event))
             if orb is None:
@@ -74,6 +76,18 @@ class SunriseSunset(MycroftSkill):
                     self.orb = "sun"
                 elif event in ['moonrise', 'moonset']:
                     self.orb = "moon"
+        else:
+            if action in ['up', 'appear', 'rise']:
+                if orb == "sun":
+                    event = "sunrise"
+                elif orb == "moon":
+                    event = "moonrise"
+            elif action in ['go down', 'disappear']:
+                if orb == "sun":
+                    event = "sunset"
+                elif orb == "moon":
+                    event = "moonset"
+
 
         """ Start calculation of rise/set events """
         if orb == "sun":
