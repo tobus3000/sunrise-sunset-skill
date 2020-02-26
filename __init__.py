@@ -24,7 +24,6 @@ class SunriseSunset(MycroftSkill):
     def initialize(self):
         self.add_event('configuration.updated', self.handler_configuration_updated)
         self.load_configuration()
-        self.register_entity_file('daytime.entity')
         self.register_entity_file('orb.entity')
         self.register_entity_file('action.entity')
         self.register_entity_file('event.entity')
