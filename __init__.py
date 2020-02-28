@@ -35,7 +35,7 @@ class SunriseSunset(MycroftSkill):
     """ Reload coordinates if config has been updated """
     def handler_configuration_updated(self, message):
         self.load_configuration()
-        self.log.info("Configuration has been updated.")
+        self.log.info("Location configuration has been updated.")
         return
 
     def load_configuration(self):
@@ -68,6 +68,8 @@ class SunriseSunset(MycroftSkill):
         if when is not None:
             if when == "tomorrow":
                 self.date = datetime.now() + timedelta(days=1)
+            elif when == "in a week":
+                self.date = datetime.now() + timedelta(days=7)
             self.log.debug("When is: " + str(when))
         else:
             when = ""
@@ -98,7 +100,7 @@ class SunriseSunset(MycroftSkill):
             sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
             if event == "sunrise":
                 in_future = self.is_time_in_future(sunrise_time)
-                if in_future or when == "tomorrow":
+                if in_future or when == "tomorrow" or when == "in a week":
                     self.speak_dialog('sunriseFuture', data={"sunrise": str(sunrise_time), "when": when})
                 else:
                     self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time), "when": when})
