@@ -106,12 +106,12 @@ class SunriseSunset(MycroftSkill):
                     self.speak_dialog('sunrisePast', data={"sunrise": str(sunrise_time), "when": when})
             elif event == "sunset":
                 in_future = self.is_time_in_future(sunset_time)
-                if in_future or when == "tomorrow":
+                if in_future or when == "tomorrow" or when == "in a week":
                     self.speak_dialog('sunsetFuture', data={"sunset": str(sunset_time), "when": when})
                 else:
                     self.speak_dialog('sunsetPast', data={"sunset": str(sunset_time), "when": when})
             else:
-                self.speak("What?")
+                self.speak("I did not understand?")
 
         elif orb == "moon":
             self.speak("I still have to learn that, sorry.")
