@@ -77,9 +77,9 @@ class SunriseSunset(MycroftSkill):
             self.log.debug("Event is: " + str(event))
             if orb is None:
                 if event in ['sunrise', 'sunset']:
-                    self.orb = "sun"
+                    orb = "sun"
                 elif event in ['moonrise', 'moonset']:
-                    self.orb = "moon"
+                    orb = "moon"
         else:
             if action in ['up', 'appear', 'rise']:
                 if orb == "sun":
