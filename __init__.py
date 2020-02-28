@@ -39,8 +39,12 @@ class SunriseSunset(MycroftSkill):
         return
 
     def load_configuration(self):
-        self.longitude = float(self.settings.get('longitude'))
-        self.latitude = float(self.settings.get('latitude'))
+        lon = self.settings.get('longitude')
+        lat = self.settings.get('latitude')
+        if lon is not None:
+            self.longitude = float(lon)
+        if lat is not None:
+            self.latitude = float(lat)
         return
 
     @intent_file_handler('set.rise.intent')
@@ -58,19 +62,19 @@ class SunriseSunset(MycroftSkill):
 
         """ See if we got an orb object """
         if orb is not None:
-            self.log.info("Orb is: " + str(orb))
+            self.log.debug("Orb is: " + str(orb))
 
         """ Change date if not today """
         if when is not None:
             if when == "tomorrow":
                 self.date = datetime.now() + timedelta(days=1)
-            self.log.info("When is: " + str(when))
+            self.log.debug("When is: " + str(when))
         else:
             when = ""
 
         """ Event can be sunrise, sunset, etc... Try to guess event from action entities if not set. """
         if event is not None:
-            self.log.info("Event is: " + str(event))
+            self.log.debug("Event is: " + str(event))
             if orb is None:
                 if event in ['sunrise', 'sunset']:
                     self.orb = "sun"
