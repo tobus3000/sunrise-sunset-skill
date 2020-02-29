@@ -39,6 +39,14 @@ Set your the latitude/longitude of your current location in the "Sunrise Sunset"
 * "When does the moon appear in the evening"
 * "..."
 
+## Installation
+### Mycroft skill marketplace
+....
+
+### Manual
+To manually install the skill, go to the Mycroft core directory and run the below.
+```mycroft-msm install https://github.com/tobus3000/sunrise-sunset-skill.git```
+
 ## Credits
 tobus3000
 
