@@ -41,6 +41,8 @@ class SunriseSunset(MycroftSkill):
     def load_configuration(self):
         lon = self.settings.get('longitude')
         lat = self.settings.get('latitude')
+        chatterbox = self.settings.get('chatterbox')
+        self.log.info("Chatterbox is: " + str(chatterbox))
         if lon is not None:
             self.longitude = float(lon)
         if lat is not None:

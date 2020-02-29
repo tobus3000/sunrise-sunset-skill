@@ -1,13 +1,12 @@
 
 skillMetadata:
   sections:
-    - name: Options << Name of section
+    - name: Options
       fields:
-        - name: internal_python_variable_name
-          type: text
-          label: Setting Friendly Display Name
-          value: ""
-          placeholder: demo prompt in the input box
+        - name: chatterbox
+          type: checkbox
+          label: Should Mycroft ask you to set reminders for sunrise/sunset events?
+          value: "false"
     - name: GPS Coordinates
       fields:
         - type: label
