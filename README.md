@@ -1,9 +1,15 @@
 # <img src="https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/solid/sun.svg" card_color="#FEE255" width="50" height="50" style="vertical-align:bottom"/> Sunrise Sunset
-Returns the time for sunset/sunrise at the given coordinates.
+Returns sun/moon set or rise times for the given coordinates.
 
 ## About
 This skill does *not* query an external API.
 All times and events are being calculated locally.
+
+## Configuration
+You need to set your coordinates on the Mycroft config page.
+* [mycroft.ai](https://account.mycroft.ai/skills)
+
+Set your the latitude/longitude of your current location in the "Sunrise Sunset" skill settings.
 
 ## Examples
 * "When does the sun set"
