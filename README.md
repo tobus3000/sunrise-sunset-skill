@@ -3,11 +3,13 @@ Returns sun/moon set or rise times for the given coordinates.
 
 ## About
 This skill does *not* query an external API.
+
 All times and events are being calculated locally.
 
 ## Configuration
 You need to set your coordinates on the Mycroft config page.
-* [mycroft.ai](https://account.mycroft.ai/skills)
+
+[mycroft.ai](https://account.mycroft.ai/skills)
 
 Set your the latitude/longitude of your current location in the "Sunrise Sunset" skill settings.
 
@@ -45,6 +47,7 @@ Set your the latitude/longitude of your current location in the "Sunrise Sunset"
 
 ### Manual
 To manually install the skill, go to the Mycroft core directory and run the below.
+
 ```mycroft-msm install https://github.com/tobus3000/sunrise-sunset-skill.git```
 
 ## Credits
