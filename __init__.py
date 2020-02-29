@@ -36,12 +36,17 @@ class SunriseSunset(MycroftSkill):
         pass
         #self.cancel_scheduled_event('my_event')
 
-    """ Reload coordinates if config has been updated """
+    """
+        Reload coordinates if need to.
+    """
     def handler_configuration_updated(self, message):
         self.load_configuration()
         self.log.info("Location configuration has been updated.")
         return
 
+    """
+        Load the coordinates and other options from local configuration.
+    """
     def load_configuration(self):
         lon = self.settings.get('longitude')
         lat = self.settings.get('latitude')
@@ -53,6 +58,9 @@ class SunriseSunset(MycroftSkill):
             self.latitude = float(lat)
         return
 
+    """
+        Handle rise/set intents.
+    """
     @intent_file_handler('set.rise.intent')
     def handler_set_rise(self, message):
         """ Only bother calculating stuff when we know at what location we are. """
@@ -66,7 +74,7 @@ class SunriseSunset(MycroftSkill):
         event = message.data.get('event')
         action = message.data.get('action')
 
-        """ See if we got an orb object """
+        """ See if we got an orb object (sun or moon). """
         if orb is not None:
             self.log.debug("Orb is: " + str(orb))
 
@@ -76,8 +84,11 @@ class SunriseSunset(MycroftSkill):
                 self.date = datetime.now() + timedelta(days=1)
             elif when == "in a week":
                 self.date = datetime.now() + timedelta(days=7)
+            else:
+                self.date = date.today()
             self.log.debug("When is: " + str(when))
         else:
+            self.date = date.today()
             when = ""
 
         """ Event can be sunrise, sunset, etc... Try to guess event from action entities if not set. """
@@ -101,7 +112,7 @@ class SunriseSunset(MycroftSkill):
                     event = "moonset"
 
 
-        """ Start calculation of rise/set events """
+        """ Start calculation of rise/set events. """
         if orb == "sun":
             sunrise_time,sunset_time = self.calc_sunrise_and_sunset(self.date)
             if event == "sunrise":
@@ -122,6 +133,11 @@ class SunriseSunset(MycroftSkill):
         elif orb == "moon":
             self.speak("I still have to learn that, sorry.")
 
+    """
+        Check if the given datetime object is in the future.
+        Will return False if the time is in the past.
+        Returns total seconds up to time if it is in the future.
+    """
     def is_time_in_future(self, dt_event):
         dt_now = datetime.now().time()
         ms_now = self.time_to_miliseconds(dt_now)
@@ -130,8 +146,12 @@ class SunriseSunset(MycroftSkill):
         self.log.info("Time delta: " + str(time_delta))
         if int(time_delta.total_seconds()) < 0:
             return False
-        return time_delta
+        return time_delta.total_seconds()
 
+    """
+        Caclulate sunrise/sunset times.
+        Courtesy of: Carlos Platoni - http://thorpesoftware.com/calculating-sunrise-and-sunset/
+    """
     def calc_sunrise_and_sunset(self, dt):
         a=math.floor((14-dt.month)/12)
         y = dt.year+4800-a
@@ -154,15 +174,28 @@ class SunriseSunset(MycroftSkill):
         self.log.debug("Julian Sunset : " + str(jset))
         return (self.calculate_time_from_julian_date(jrise), self.calculate_time_from_julian_date(jset))
 
+    """
+        Caclulate moonrise/moonset times.
+        Courtesy of:
+    """
     def calc_moonrise_and_moonset(self, dt):
         pass
 
+    """
+        Helper function to convert sin to rad.
+    """
     def sin_to_rad(self, deg):
         return math.sin(deg * math.pi/180)
 
+    """
+        Helper to convert cosin to rad.
+    """
     def cos_to_rad(self, deg):
         return math.cos(deg * math.pi/180)
 
+    """
+        Convert julian time to regular time.
+    """
     def calculate_time_from_julian_date(self, jd):
         jd=jd+.5
         secs=int((jd-int(jd))*24*60*60+.5)
@@ -170,7 +203,10 @@ class SunriseSunset(MycroftSkill):
         hour=int(mins/60)
         return time(hour, mins % 60, secs % 60)
 
-    """ Expects a datetime.time object and returns timedelta object """
+    """
+        Converts a given datetime object to miliseconds.
+        Expects a datetime.time object and returns timedelta object .
+    """
     def time_to_miliseconds(self, tm):
         return timedelta(hours=tm.hour, minutes=tm.minute, seconds=tm.second, microseconds=tm.microsecond)
 
