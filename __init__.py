@@ -32,6 +32,10 @@ class SunriseSunset(MycroftSkill):
     def stop(self):
         pass
 
+    def shutdown(self):
+        pass
+        #self.cancel_scheduled_event('my_event')
+
     """ Reload coordinates if config has been updated """
     def handler_configuration_updated(self, message):
         self.load_configuration()
