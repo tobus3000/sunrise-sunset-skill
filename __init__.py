@@ -50,8 +50,6 @@ class SunriseSunset(MycroftSkill):
     def load_configuration(self):
         lon = self.settings.get('longitude')
         lat = self.settings.get('latitude')
-        chatterbox = self.settings.get('chatterbox')
-        self.log.info("Chatterbox is: " + str(chatterbox))
         if lon is not None:
             self.longitude = float(lon)
         if lat is not None:
@@ -97,20 +95,13 @@ class SunriseSunset(MycroftSkill):
             if orb is None:
                 if event in ['sunrise', 'sunset']:
                     orb = "sun"
-                elif event in ['moonrise', 'moonset']:
-                    orb = "moon"
         else:
             if action in ['up', 'appear', 'rise']:
                 if orb == "sun":
                     event = "sunrise"
-                elif orb == "moon":
-                    event = "moonrise"
             elif action in ['go down', 'disappear']:
                 if orb == "sun":
                     event = "sunset"
-                elif orb == "moon":
-                    event = "moonset"
-
 
         """ Start calculation of rise/set events. """
         if orb == "sun":
@@ -130,9 +121,7 @@ class SunriseSunset(MycroftSkill):
             else:
                 self.speak("I did not understand?")
 
-        elif orb == "moon":
-            self.speak("I still have to learn that, sorry.")
-
+        
     """
         Check if the given datetime object is in the future.
         Will return False if the time is in the past.
@@ -173,13 +162,6 @@ class SunriseSunset(MycroftSkill):
         self.log.debug("Julian Sunrise: " + str(jrise))
         self.log.debug("Julian Sunset : " + str(jset))
         return (self.calculate_time_from_julian_date(jrise), self.calculate_time_from_julian_date(jset))
-
-    """
-        Caclulate moonrise/moonset times.
-        Courtesy of:
-    """
-    def calc_moonrise_and_moonset(self, dt):
-        pass
 
     """
         Helper function to convert sin to rad.

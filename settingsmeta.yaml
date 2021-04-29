@@ -1,12 +1,6 @@
 
 skillMetadata:
   sections:
-    - name: Options
-      fields:
-        - name: chatterbox
-          type: checkbox
-          label: Should Mycroft ask you to set reminders for sunrise/sunset events?
-          value: "false"
     - name: GPS Coordinates
       fields:
         - type: label
